@@ -1,0 +1,55 @@
+/* feedbackco-admin.css */
+
+/* General Styles for the Plugin Admin Pages */
+.wrap h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.feedbackco-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.feedbackco-table th,
+.feedbackco-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e1e1e1;
+    text-align: left;
+}
+
+.feedbackco-table th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.feedbackco-table tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.feedbackco-export-button {
+    margin-bottom: 20px;
+}
+
+.feedbackco-analytics-chart {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.feedbackco-settings-form .form-table th {
+    width: 200px;
+}
+
+.feedbackco-settings-form .form-table input[type="text"],
+.feedbackco-settings-form .form-table input[type="email"],
+.feedbackco-settings-form .form-table input[type="number"],
+.feedbackco-settings-form .form-table textarea {
+    width: 100%;
+}
+
+.feedbackco-notice {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-left: 4px solid #00a0d2;
+    background-color: #f1f1f1;
+}
