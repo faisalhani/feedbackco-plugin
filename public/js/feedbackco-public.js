@@ -45,6 +45,12 @@ jQuery(document).ready(function($) {
             categoryValue = categoryField.val();
         }
 
+          // Get reCAPTCHA response if enabled
+    var recaptchaResponse = '';
+    if (typeof grecaptcha !== 'undefined') {
+        recaptchaResponse = grecaptcha.getResponse();
+    }
+
             var formData = {
                 action: 'feedbackco_submit_feedback',
                 nonce: feedbackco_ajax.nonce,
@@ -52,7 +58,8 @@ jQuery(document).ready(function($) {
                 user_email: $form.find('input[name="user_email"]').val(),
                 message: $form.find('textarea[name="message"]').val(),
                 rating: selectedRating,
-                category: categoryValue
+                category: categoryValue,
+                recaptcha_response: recaptchaResponse
             };    
            
             $.post(feedbackco_ajax.ajax_url, formData, function(response) {

@@ -62,16 +62,21 @@ class FeedbackCo_Admin {
             return;
         }
     
-        wp_enqueue_script($this->plugin_name . '-admin', plugin_dir_url(__FILE__) . 'js/feedbackco-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
+        // Enqueue WordPress jQuery UI Tabs
+        wp_enqueue_script('jquery-ui-tabs');
     
-        // Localize script for AJAX
-        wp_localize_script($this->plugin_name . '-admin', 'feedbackco_admin_ajax', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce'    => wp_create_nonce('feedbackco_admin_nonce'),
-        ));
+        // Enqueue WordPress Admin Styles
+        wp_enqueue_style('wp-jquery-ui-dialog');
     
-        // Enqueue the color picker CSS
+        // Enqueue the admin stylesheet
+        wp_enqueue_style($this->plugin_name . '-admin', plugin_dir_url(__FILE__) . 'css/feedbackco-admin.css', array(), $this->version, 'all');
+    
+        // Enqueue the color picker script and style
+        wp_enqueue_script('wp-color-picker');
         wp_enqueue_style('wp-color-picker');
+    
+        // Enqueue your admin script
+        wp_enqueue_script($this->plugin_name . '-admin', plugin_dir_url(__FILE__) . 'js/feedbackco-admin.js', array('jquery', 'jquery-ui-tabs', 'wp-color-picker'), $this->version, true);
     }
     
 
@@ -98,7 +103,13 @@ class FeedbackCo_Admin {
         register_setting('feedbackco_settings_group', 'feedbackco_button_bg_color', 'sanitize_hex_color');
         register_setting('feedbackco_settings_group', 'feedbackco_button_text_color', 'sanitize_hex_color');
         
+        // Category settings
         register_setting('feedbackco_categories_group', 'feedbackco_feedback_categories', array($this, 'sanitize_categories'));
+
+        // reCAPTCHA settings
+        register_setting('feedbackco_recaptcha_settings_group', 'feedbackco_recaptcha_enabled');
+        register_setting('feedbackco_recaptcha_settings_group', 'feedbackco_recaptcha_site_key');
+        register_setting('feedbackco_recaptcha_settings_group', 'feedbackco_recaptcha_secret_key');
     }
 
     public function sanitize_categories($input) {

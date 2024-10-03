@@ -14,3 +14,38 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function($) {
     $('.feedbackco-color-field').wpColorPicker();
 });
+
+jQuery(document).ready(function($) {
+    // Initialize color picker fields
+    $('.feedbackco-color-field').wpColorPicker();
+
+    // Handle tab navigation
+    function showTab(tabId) {
+        // Remove active class from all tabs
+        $('.nav-tab-wrapper a').removeClass('nav-tab-active');
+        $('.feedbackco-tab-content').hide();
+
+        // Add active class to selected tab
+        $('.nav-tab-wrapper a[href="' + tabId + '"]').addClass('nav-tab-active');
+        $(tabId).show();
+    }
+
+    // On tab click
+    $('.nav-tab-wrapper a').click(function(event) {
+        event.preventDefault();
+        var selected_tab = $(this).attr('href');
+
+        // Store selected tab in localStorage
+        localStorage.setItem('feedbackco_selected_tab', selected_tab);
+
+        showTab(selected_tab);
+    });
+
+    // On page load, check if a tab is stored
+    var storedTab = localStorage.getItem('feedbackco_selected_tab');
+    if (storedTab) {
+        showTab(storedTab);
+    } else {
+        showTab('#feedbackco-tab-widget'); // Default tab
+    }
+});

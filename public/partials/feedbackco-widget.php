@@ -9,6 +9,9 @@ $options = array(
 
 $categories = get_option('feedbackco_feedback_categories', array());
 
+
+$recaptcha_enabled = get_option('feedbackco_recaptcha_enabled', false);
+$recaptcha_site_key = get_option('feedbackco_recaptcha_site_key', '');
 ?>
 
 <style>
@@ -116,6 +119,20 @@ $categories = get_option('feedbackco_feedback_categories', array());
                     <label for="feedbackco-message">Message</label>
                     <textarea id="feedbackco-message" name="message" required></textarea>
                 </div>
+
+
+                <div style="display:none;">
+        <label for="feedbackco-website">Website</label>
+        <input type="text" id="feedbackco-website" name="website" autocomplete="off">
+    </div>
+
+    <?php if ($recaptcha_enabled && !empty($recaptcha_site_key)): ?>
+    <!-- reCAPTCHA v2 Checkbox -->
+    <div class="feedbackco-field">
+        <div class="g-recaptcha" data-sitekey="<?php echo esc_attr($recaptcha_site_key); ?>"></div>
+    </div>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<?php endif; ?>
                 <button type="submit" id="feedbackco-submit">Submit</button>
                 <button type="button" id="feedbackco-cancel">Cancel</button>
             </form>

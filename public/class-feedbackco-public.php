@@ -88,11 +88,46 @@ class FeedbackCo_Public {
     public function submit_feedback() {
         check_ajax_referer('feedbackco_nonce', 'nonce');
     
+        if (!empty($_POST['website'])) {
+            // It's a spam submission; discard it
+            wp_send_json_error('Spam detected. Submission discarded.');
+            return;
+        }
+
+            // reCAPTCHA verification
+    $recaptcha_enabled = get_option('feedbackco_recaptcha_enabled', false);
+    if ($recaptcha_enabled) {
+        $recaptcha_secret_key = get_option('feedbackco_recaptcha_secret_key', '');
+        $recaptcha_response = isset($_POST['recaptcha_response']) ? sanitize_text_field($_POST['recaptcha_response']) : '';
+
+        if (empty($recaptcha_response)) {
+            wp_send_json_error('reCAPTCHA verification failed. Please try again.');
+            return;
+        }
+
+        // Verify reCAPTCHA response with Google
+        $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', array(
+            'body' => array(
+                'secret'   => $recaptcha_secret_key,
+                'response' => $recaptcha_response,
+                'remoteip' => $_SERVER['REMOTE_ADDR']
+            )
+        ));
+
+        $response_body = wp_remote_retrieve_body($response);
+        $result = json_decode($response_body, true);
+
+        if (empty($result['success'])) {
+            wp_send_json_error('reCAPTCHA verification failed. Please try again.');
+            return;
+        }
+    }
+
         $user_name  = sanitize_text_field($_POST['user_name']);
         $user_email = sanitize_email($_POST['user_email']);
         $message    = sanitize_textarea_field($_POST['message']);
         $rating     = intval($_POST['rating']);
-        $category   = sanitize_text_field($_POST['category']);
+        $category   = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
 
         global $wpdb;
         $table_name = $wpdb->prefix . 'feedbackco_entries';
