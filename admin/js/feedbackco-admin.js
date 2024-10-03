@@ -10,3 +10,7 @@ jQuery(document).ready(function($) {
         window.location.href = exportUrl;
     });
 });
+
+jQuery(document).ready(function($) {
+    $('.feedbackco-color-field').wpColorPicker();
+});

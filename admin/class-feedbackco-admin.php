@@ -54,26 +54,24 @@ class FeedbackCo_Admin {
         wp_enqueue_style($this->plugin_name . '-admin', plugin_dir_url(__FILE__) . 'css/feedbackco-admin.css', array(), $this->version, 'all');
     }
 
-    public function enqueue_scripts() {
-        wp_enqueue_script($this->plugin_name . '-admin', plugin_dir_url(__FILE__) . 'js/feedbackco-admin.js', array('jquery'), $this->version, false);
-
+    public function enqueue_scripts($hook) {
+        // Enqueue scripts only on your plugin's settings page
+        if ($hook !== 'toplevel_page_feedbackco' && $hook !== 'feedbackco_page_feedbackco-settings') {
+            return;
+        }
+    
+        wp_enqueue_script($this->plugin_name . '-admin', plugin_dir_url(__FILE__) . 'js/feedbackco-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
+    
         // Localize script for AJAX
         wp_localize_script($this->plugin_name . '-admin', 'feedbackco_admin_ajax', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce'    => wp_create_nonce('feedbackco_admin_nonce'),
         ));
-
-        $screen = get_current_screen();
-        if ($screen->id === 'toplevel_page_feedbackco') { // Adjust if your settings page slug is different
-        wp_enqueue_script(
-            $this->plugin_name . '-admin-settings',
-            plugin_dir_url(__FILE__) . 'js/feedbackco-admin-settings.js',
-            array('jquery'),
-            $this->version,
-            true
-            );
-         }
+    
+        // Enqueue the color picker CSS
+        wp_enqueue_style('wp-color-picker');
     }
+    
 
     public function display_dashboard() {
         include_once 'partials/feedbackco-dashboard.php';
@@ -93,7 +91,12 @@ class FeedbackCo_Admin {
 
     public function register_settings() {
         register_setting('feedbackco_settings_group', 'feedbackco_widget_enabled');
-    }    
+        register_setting('feedbackco_settings_group', 'feedbackco_widget_position', 'sanitize_text_field');
+        register_setting('feedbackco_settings_group', 'feedbackco_button_text', 'sanitize_text_field');
+        register_setting('feedbackco_settings_group', 'feedbackco_button_bg_color', 'sanitize_hex_color');
+        register_setting('feedbackco_settings_group', 'feedbackco_button_text_color', 'sanitize_hex_color');
+        // Add other settings as needed
+    }
 
     public function export_csv() {
         check_ajax_referer('feedbackco_admin_nonce', 'nonce');

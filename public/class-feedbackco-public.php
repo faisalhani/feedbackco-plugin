@@ -16,17 +16,68 @@ class FeedbackCo_Public {
 
     public function enqueue_styles() {
         wp_enqueue_style($this->plugin_name . '-public', plugin_dir_url(__FILE__) . 'css/feedbackco-public.css', array(), $this->version, 'all');
+    
+        // Enqueue dynamic styles
+        wp_add_inline_style($this->plugin_name . '-public', $this->get_dynamic_styles());
     }
 
-    public function enqueue_scripts() {
-        wp_enqueue_script($this->plugin_name . '-public', plugin_dir_url(__FILE__) . 'js/feedbackco-public.js', array('jquery'), $this->version, false);
-
-        // Localize script for AJAX
-        wp_localize_script($this->plugin_name . '-public', 'feedbackco_ajax', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce'    => wp_create_nonce('feedbackco_nonce'),
-        ));
+    private function get_dynamic_styles() {
+        $options = array(
+            'position' => get_option('feedbackco_widget_position', 'bottom-right'),
+            'button_bg_color' => get_option('feedbackco_button_bg_color', '#0073aa'),
+            'button_text_color' => get_option('feedbackco_button_text_color', '#ffffff'),
+            // Add other options as needed
+        );
+    
+        $position_css = '';
+        switch ($options['position']) {
+            case 'bottom-right':
+                $position_css = 'bottom: 20px; right: 20px;';
+                break;
+            case 'bottom-left':
+                $position_css = 'bottom: 20px; left: 20px;';
+                break;
+            case 'top-right':
+                $position_css = 'top: 20px; right: 20px;';
+                break;
+            case 'top-left':
+                $position_css = 'top: 20px; left: 20px;';
+                break;
+            default:
+                $position_css = 'bottom: 20px; right: 20px;';
+        }
+    
+        $dynamic_css = "
+        #feedbackco-widget {
+            position: fixed;
+            $position_css
+            z-index: 9999;
+        }
+        #feedbackco-button {
+            background-color: {$options['button_bg_color']};
+            color: {$options['button_text_color']};
+        }
+        ";
+    
+        return $dynamic_css;
     }
+
+   public function enqueue_scripts() {
+    wp_enqueue_script(
+        $this->plugin_name . '-public',
+        plugin_dir_url(__FILE__) . 'js/feedbackco-public.js',
+        array('jquery'),
+        $this->version,
+        true
+    );
+
+    // Localize script for AJAX
+    wp_localize_script($this->plugin_name . '-public', 'feedbackco_ajax', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce'    => wp_create_nonce('feedbackco_nonce'),
+    ));
+}
+
 
     public function inject_widget() {
         if (get_option('feedbackco_widget_enabled')) {
