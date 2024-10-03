@@ -8,11 +8,12 @@
         <thead>
             <tr>
                 <th width="5%">ID</th>
-                <th width="20%">Name</th>
+                <th width="15%">Name</th>
                 <th width="20%">Email</th>
-                <th width="35%">Message</th>
-                <th width="10%">Rating</th>
-                <th width="10%">Date</th>
+                <th width="30%">Message</th>
+                <th width="5%">Rating</th>
+                <th idth="10%">Category</th>
+                <th width="5%">Date</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
                     echo '<td>' . esc_html($entry->user_email) . '</td>';
                     echo '<td>' . esc_html($entry->message) . '</td>';
                     echo '<td>' . esc_html($entry->rating) . '</td>';
+                    echo '<td>' . esc_html($entry->category) . '</td>';
                     echo '<td>' . esc_html($entry->created_at) . '</td>';
                     echo '</tr>';
                 }

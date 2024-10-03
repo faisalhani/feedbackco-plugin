@@ -110,3 +110,17 @@
 .feedbackco-thank-you button:hover {
     background-color: #005177;
 }
+
+
+/* Style for the Category Field */
+.feedbackco-field select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+
+.feedbackco-field select:focus {
+    outline: none;
+    border: 1px solid #0073aa;
+}

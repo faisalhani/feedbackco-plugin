@@ -38,15 +38,23 @@ jQuery(document).ready(function($) {
                 return;
             }
 
+            // Get category value if the field exists
+        var categoryField = $form.find('select[name="category"]');
+        var categoryValue = '';
+        if (categoryField.length > 0) {
+            categoryValue = categoryField.val();
+        }
+
             var formData = {
                 action: 'feedbackco_submit_feedback',
                 nonce: feedbackco_ajax.nonce,
                 user_name: $form.find('input[name="user_name"]').val(),
                 user_email: $form.find('input[name="user_email"]').val(),
                 message: $form.find('textarea[name="message"]').val(),
-                rating: selectedRating
-            };
-
+                rating: selectedRating,
+                category: categoryValue
+            };    
+           
             $.post(feedbackco_ajax.ajax_url, formData, function(response) {
                 if (response.success) {
                     // Show thank you message

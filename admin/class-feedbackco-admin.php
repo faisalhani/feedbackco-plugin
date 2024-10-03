@@ -9,6 +9,8 @@ class FeedbackCo_Admin {
     public function __construct($plugin_name, $version) {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
+
+        add_action('admin_init', array($this, 'handle_category_actions'));
     }
 
     public function add_plugin_admin_menu() {
@@ -95,7 +97,49 @@ class FeedbackCo_Admin {
         register_setting('feedbackco_settings_group', 'feedbackco_button_text', 'sanitize_text_field');
         register_setting('feedbackco_settings_group', 'feedbackco_button_bg_color', 'sanitize_hex_color');
         register_setting('feedbackco_settings_group', 'feedbackco_button_text_color', 'sanitize_hex_color');
-        // Add other settings as needed
+        
+        register_setting('feedbackco_categories_group', 'feedbackco_feedback_categories', array($this, 'sanitize_categories'));
+    }
+
+    public function sanitize_categories($input) {
+        // Ensure categories are stored as an array of sanitized strings
+        if (is_array($input)) {
+            $sanitized = array_map('sanitize_text_field', $input);
+            return $sanitized;
+        }
+        return array();
+    }
+    
+    public function handle_category_actions() {
+        if (isset($_POST['add_category'])) {
+            
+            if (!isset($_POST['feedbackco_add_category_nonce']) || !wp_verify_nonce($_POST['feedbackco_add_category_nonce'], 'feedbackco_add_category_action')) {
+                wp_die('Security check failed');
+            }
+    
+            $new_category = sanitize_text_field($_POST['feedbackco_new_category']);
+            if (!empty($new_category)) {
+                $categories = get_option('feedbackco_feedback_categories', array());
+                if (!in_array($new_category, $categories)) {
+                    $categories[] = $new_category;
+                    update_option('feedbackco_feedback_categories', $categories);
+                }
+            }
+        }
+    
+        if (isset($_POST['delete_category'])) {
+            // Verify nonce
+            if (!isset($_POST['feedbackco_delete_category_nonce']) || !wp_verify_nonce($_POST['feedbackco_delete_category_nonce'], 'feedbackco_delete_category_action')) {
+                wp_die('Security check failed');
+            }
+        
+            $category_to_delete = sanitize_text_field($_POST['category_to_delete']);
+            $categories = get_option('feedbackco_feedback_categories', array());
+            if (($key = array_search($category_to_delete, $categories)) !== false) {
+                unset($categories[$key]);
+                update_option('feedbackco_feedback_categories', $categories);
+            }
+        }
     }
 
     public function export_csv() {

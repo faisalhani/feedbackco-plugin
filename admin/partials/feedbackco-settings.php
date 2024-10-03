@@ -51,6 +51,52 @@
     </form>
 </div>
 
+<h2>Feedback Categories</h2>
+<form method="post" action="">
+    <?php wp_nonce_field('feedbackco_add_category_action', 'feedbackco_add_category_nonce'); ?>
+    <table class="form-table">
+        <tr valign="top">
+            <th scope="row">Add New Category</th>
+            <td>
+                <input type="text" name="feedbackco_new_category" value="" />
+                <input type="submit" name="add_category" class="button button-secondary" value="Add Category">
+            </td>
+        </tr>
+    </table>
+</form>
+
+<h3>Existing Categories</h3>
+<table class="widefat">
+    <thead>
+        <tr>
+            <th>Category Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $categories = get_option('feedbackco_feedback_categories', array());
+        if (!empty($categories)) {
+            foreach ($categories as $category) {
+                echo '<tr>';
+                echo '<td>' . esc_html($category) . '</td>';
+                echo '<td>';
+                echo '<form method="post" action="">';
+                wp_nonce_field('feedbackco_delete_category_action', 'feedbackco_delete_category_nonce');
+                echo '<input type="hidden" name="category_to_delete" value="' . esc_attr($category) . '">';
+                echo '<input type="submit" name="delete_category" class="button button-delete" value="Delete">';
+                echo '</form>';
+                echo '</td>';
+                echo '</tr>';
+            }
+        } else {
+            echo '<tr><td colspan="2">No categories defined.</td></tr>';
+        }
+        ?>
+    </tbody>
+</table>
+
+
 
 <script>
     jQuery(document).ready(function($) {

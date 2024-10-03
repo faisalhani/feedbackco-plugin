@@ -92,7 +92,8 @@ class FeedbackCo_Public {
         $user_email = sanitize_email($_POST['user_email']);
         $message    = sanitize_textarea_field($_POST['message']);
         $rating     = intval($_POST['rating']);
-    
+        $category   = sanitize_text_field($_POST['category']);
+
         global $wpdb;
         $table_name = $wpdb->prefix . 'feedbackco_entries';
     
@@ -103,6 +104,7 @@ class FeedbackCo_Public {
                 'user_email' => $user_email,
                 'message'    => $message,
                 'rating'     => $rating,
+                'category'   => $category,
             )
         );
     

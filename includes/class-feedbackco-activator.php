@@ -13,6 +13,7 @@ class FeedbackCo_Activator {
             user_email varchar(255) NOT NULL,
             message text NOT NULL,
             rating int(1) NOT NULL,
+            category varchar(255) DEFAULT '' NOT NULL,
             form_id varchar(50) DEFAULT '' NOT NULL,
             date_submitted datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id)
@@ -20,5 +21,7 @@ class FeedbackCo_Activator {
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
+
+        update_option('feedbackco_db_version', FEEDBACKCO_DB_VERSION);
     }
 }
