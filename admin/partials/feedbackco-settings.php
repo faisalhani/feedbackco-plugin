@@ -16,22 +16,6 @@
         </table>
         <?php submit_button(); ?>
     </form>
-
-    <h2>Feedback Form Shortcode</h2>
-<p>Use the shortcode below to embed the feedback form anywhere on your site:</p>
-<pre><code>[feedbackco_form]</code></pre>
-<button id="feedbackco-copy-shortcode" class="button">Copy Shortcode</button>
-
-<h3>Customization Options</h3>
-<p>You can customize the form using the following attributes:</p>
-<ul>
-    <li><code>title</code>: The title displayed above the form. Default is "Send us your feedback".</li>
-    <li><code>button_text</code>: The text displayed on the submit button. Default is "Submit".</li>
-    <!-- Add more attributes if implemented -->
-</ul>
-<p><strong>Example:</strong></p>
-<pre><code>[feedbackco_form title="We value your opinion" button_text="Send Feedback"]</code></pre>
-
 </div>
 
 <script>
