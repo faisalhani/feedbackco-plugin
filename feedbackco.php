@@ -56,35 +56,3 @@ function run_feedbackco() {
 
 
 run_feedbackco();
-
-
-/**
- * Register the shortcode.
- */
-function feedbackco_shortcode($atts) {
-    // Shortcode attributes with defaults
-    $atts = shortcode_atts(
-        array(
-            'title'       => 'Send us your feedback',
-            'button_text' => 'Submit',
-            'id'          => '1', // Optional: Use for multiple forms
-        ),
-        $atts,
-        'feedbackco_form'
-    );
-
-    // Start output buffering
-    ob_start();
-
-    // Extract attributes into variables
-    $title       = $atts['title'];
-    $button_text = $atts['button_text'];
-    $id          = $atts['id'];
-
-    // Include the form template
-    include plugin_dir_path(__FILE__) . 'public/partials/feedbackco-form-shortcode.php';
-
-    // Return the buffered content
-    return ob_get_clean();
-}
-add_shortcode('feedbackco_form', 'feedbackco_shortcode');

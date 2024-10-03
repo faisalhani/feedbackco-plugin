@@ -1,10 +1,42 @@
-/* Basic styles for the feedback form */
-.feedbackco-form-container {
-    /* Styles for the form container */
+/* Widget Container */
+#feedbackco-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
 }
 
-.feedbackco-form {
-    /* Styles for the form */
+/* Feedback Button */
+#feedbackco-button {
+    background-color: #0073aa;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Form Container */
+#feedbackco-form-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 350px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Form Styling */
+#feedbackco-form {
+    padding: 20px;
+}
+
+#feedbackco-form h3 {
+    margin-top: 0;
+    font-size: 20px;
 }
 
 .feedbackco-field {
@@ -14,6 +46,7 @@
 .feedbackco-field label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .feedbackco-field input,
@@ -23,47 +56,56 @@
     box-sizing: border-box;
 }
 
-.feedbackco-rating .star {
+#feedbackco-rating .star {
     font-size: 24px;
     color: #ccc;
     cursor: pointer;
 }
 
-.feedbackco-rating .star.selected {
-    color: #f39c12;
+#feedbackco-rating .star.selected {
+    color: #f5b301;
 }
 
-.feedbackco-submit {
+#feedbackco-submit,
+#feedbackco-cancel {
     background-color: #0073aa;
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px 16px;
     border: none;
+    border-radius: 4px;
     cursor: pointer;
+    margin-right: 10px;
 }
 
-.feedbackco-cancel {
-    background-color: #a00;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
+#feedbackco-cancel {
+    background-color: #999;
 }
 
+/* Thank You Message Styling */
 .feedbackco-thank-you {
     text-align: center;
+    padding: 20px;
 }
 
-#feedbackco-widget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+.feedbackco-thank-you h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
 }
 
-#feedbackco-button {
+.feedbackco-thank-you p {
+    font-size: 1em;
+}
+
+.feedbackco-thank-you button {
+    margin-top: 15px;
+    padding: 10px 20px;
     background-color: #0073aa;
     color: #fff;
-    padding: 15px;
     border: none;
-    border-radius: 50%;
+    border-radius: 4px;
     cursor: pointer;
+}
+
+.feedbackco-thank-you button:hover {
+    background-color: #005177;
 }
