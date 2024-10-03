@@ -52,12 +52,22 @@ class FeedbackCo_Admin {
         );
     }
 
-    public function enqueue_styles() {
+    public function enqueue_styles($hook) {
+        // Enqueue styles only on plugin's settings page
+        if ($hook !== 'toplevel_page_feedbackco' && $hook !== 'feedbackco_page_feedbackco-settings') {
+            return;
+        }
+
+        // Enqueue the admin stylesheet
         wp_enqueue_style($this->plugin_name . '-admin', plugin_dir_url(__FILE__) . 'css/feedbackco-admin.css', array(), $this->version, 'all');
+
+        // Enqueue Font Awesome for the admin
+        wp_enqueue_style('feedbackco-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
     }
 
     public function enqueue_scripts($hook) {
-        // Enqueue scripts only on your plugin's settings page
+        // Enqueue scripts only on plugin's settings page
         if ($hook !== 'toplevel_page_feedbackco' && $hook !== 'feedbackco_page_feedbackco-settings') {
             return;
         }
@@ -102,7 +112,8 @@ class FeedbackCo_Admin {
         register_setting('feedbackco_settings_group', 'feedbackco_button_text', 'sanitize_text_field');
         register_setting('feedbackco_settings_group', 'feedbackco_button_bg_color', 'sanitize_hex_color');
         register_setting('feedbackco_settings_group', 'feedbackco_button_text_color', 'sanitize_hex_color');
-        
+        register_setting('feedbackco_settings_group', 'feedbackco_button_icon');
+
         // Category settings
         register_setting('feedbackco_categories_group', 'feedbackco_feedback_categories', array($this, 'sanitize_categories'));
 

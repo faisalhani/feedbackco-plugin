@@ -54,3 +54,19 @@
     background-color: #f1f1f1;
 }
 
+.feedbackco-icon-option {
+    display: inline-block;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+.feedbackco-icon-option input[type="radio"] {
+    margin-right: 5px;
+}
+
+.feedbackco-icon-option i {
+    font-size: 24px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+

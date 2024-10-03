@@ -4,7 +4,7 @@ $options = array(
     'button_text' => get_option('feedbackco_button_text', 'Feedback'),
     'button_bg_color' => get_option('feedbackco_button_bg_color', '#0073aa'),
     'button_text_color' => get_option('feedbackco_button_text_color', '#ffffff'),
-    // Add other options as needed
+    'button_icon' => get_option('feedbackco_button_icon', ''),
 );
 
 $categories = get_option('feedbackco_feedback_categories', array());
@@ -82,7 +82,12 @@ $recaptcha_site_key = get_option('feedbackco_recaptcha_site_key', '');
 
 
 <div id="feedbackco-widget">
-<button id="feedbackco-button"><?php echo esc_html($options['button_text']); ?></button>
+<button id="feedbackco-button">
+        <?php if (!empty($options['button_icon'])): ?>
+            <i class="<?php echo esc_attr($options['button_icon']); ?>"></i>
+        <?php endif; ?>
+        <?php echo esc_html($options['button_text']); ?>
+    </button>
 
     <div id="feedbackco-form-container">
         <div id="feedbackco-form">

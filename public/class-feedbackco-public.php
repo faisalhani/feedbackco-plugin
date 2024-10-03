@@ -19,6 +19,9 @@ class FeedbackCo_Public {
     
         // Enqueue dynamic styles
         wp_add_inline_style($this->plugin_name . '-public', $this->get_dynamic_styles());
+
+         // Enqueue Font Awesome
+    wp_enqueue_style('feedbackco-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
     }
 
     private function get_dynamic_styles() {

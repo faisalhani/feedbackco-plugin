@@ -48,4 +48,20 @@ jQuery(document).ready(function($) {
     } else {
         showTab('#feedbackco-tab-widget'); // Default tab
     }
+
+    $('#feedbackco-button-icon').each(function() {
+        var $select = $(this);
+        var options = $select.find('option');
+
+        options.each(function() {
+            var $option = $(this);
+            var iconClass = $option.val();
+            if (iconClass) {
+                $option.text(' ' + $option.text());
+                $option.prepend($('<i></i>').addClass(iconClass));
+            }
+        });
+    });
+
+    
 });

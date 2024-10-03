@@ -15,6 +15,14 @@
     border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#feedbackco-button i {
+    margin-right: 8px;
+    font-size: 18px;
 }
 
 /* Form Container */

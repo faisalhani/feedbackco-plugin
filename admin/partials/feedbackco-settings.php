@@ -43,6 +43,34 @@
                             <input type="text" name="feedbackco_button_text" value="<?php echo esc_attr(get_option('feedbackco_button_text', 'Feedback')); ?>" />
                         </td>
                     </tr>
+
+                    <tr valign="top">
+    <th scope="row">Button Icon</th>
+    <td>
+        <select name="feedbackco_button_icon" id="feedbackco-button-icon">
+            <option value="">No Icon</option>
+            <?php
+            // Define a list of icons to choose from
+            $icons = array(
+                'fas fa-comment' => 'Comment',
+                'fas fa-comments' => 'Comments',
+                'fas fa-envelope' => 'Envelope',
+                'fas fa-paper-plane' => 'Paper Plane',
+                'fas fa-smile' => 'Smile',
+                'fas fa-thumbs-up' => 'Thumbs Up',
+                // Add more icons as needed
+            );
+            $selected_icon = get_option('feedbackco_button_icon', '');
+            foreach ($icons as $icon_class => $icon_name) {
+                $selected = selected($selected_icon, $icon_class, false);
+                echo '<option value="' . esc_attr($icon_class) . '" ' . $selected . ' data-icon="' . esc_attr($icon_class) . '">' . esc_html($icon_name) . '</option>';
+            }
+            ?>
+        </select>
+        <p class="description">Choose an icon to display on the feedback button.</p>
+    </td>
+</tr>
+
                     <tr valign="top">
                         <th scope="row">Button Background Color</th>
                         <td>
