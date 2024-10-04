@@ -113,7 +113,9 @@ class FeedbackCo_Admin {
         register_setting('feedbackco_settings_group', 'feedbackco_button_bg_color', 'sanitize_hex_color');
         register_setting('feedbackco_settings_group', 'feedbackco_button_text_color', 'sanitize_hex_color');
         register_setting('feedbackco_settings_group', 'feedbackco_button_icon');
-
+ // Register shortcode settings
+ register_setting('feedbackco_shortcode_settings_group', 'feedbackco_shortcode_display_mode');
+ 
         // Category settings
         register_setting('feedbackco_categories_group', 'feedbackco_feedback_categories', array($this, 'sanitize_categories'));
 

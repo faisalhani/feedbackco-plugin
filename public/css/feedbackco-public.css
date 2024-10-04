@@ -132,3 +132,20 @@
     outline: none;
     border: 1px solid #0073aa;
 }
+
+/* Common styles for both inline and popup modes */
+.feedbackco-shortcode-form {
+    position: relative;
+    z-index: 9999;
+}
+
+.feedbackco-shortcode-form.inline {
+    margin: 0 auto;
+}
+
+.feedbackco-shortcode-form.popup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}

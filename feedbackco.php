@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: FeedbackCo
-Plugin URI: #
+
 Description: A plugin to create and manage feedback widgets.
 Version: 1.0.0
 Author: Functions io
-Author URI: #
+
 License: GPLv2 or later
 Text Domain: feedbackco
 */

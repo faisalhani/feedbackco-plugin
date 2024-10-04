@@ -4,7 +4,7 @@
     <h2 class="nav-tab-wrapper">
         <a href="#feedbackco-tab-widget" class="nav-tab nav-tab-active">Widget Settings</a>
         <a href="#feedbackco-tab-categories" class="nav-tab">Category Settings</a>
-        <a href="#feedbackco-tab-advanced" class="nav-tab">Advanced Settings</a>
+        <a href="#feedbackco-tab-shortcode" class="nav-tab">Shortcode Settings</a>
     </h2>
 
     <div id="feedbackco-tabs">
@@ -136,35 +136,49 @@
             </table>
         </div>
 
-        <!-- Advanced Settings Tab -->
-        <div id="feedbackco-tab-advanced" class="feedbackco-tab-content" style="display:none;">
-            <form method="post" action="options.php">
-                <?php
-                settings_fields('feedbackco_recaptcha_settings_group');
-                do_settings_sections('feedbackco_recaptcha_settings_group');
-                ?>
-                <table class="form-table">
-                    <tr valign="top">
-                        <th scope="row">Enable reCAPTCHA</th>
-                        <td>
-                            <input type="checkbox" name="feedbackco_recaptcha_enabled" value="1" <?php checked(1, get_option('feedbackco_recaptcha_enabled'), true); ?> />
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">reCAPTCHA Site Key</th>
-                        <td>
-                            <input type="text" name="feedbackco_recaptcha_site_key" value="<?php echo esc_attr(get_option('feedbackco_recaptcha_site_key', '')); ?>" />
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">reCAPTCHA Secret Key</th>
-                        <td>
-                            <input type="text" name="feedbackco_recaptcha_secret_key" value="<?php echo esc_attr(get_option('feedbackco_recaptcha_secret_key', '')); ?>" />
-                        </td>
-                    </tr>
-                </table>
-                <?php submit_button(); ?>
-            </form>
-        </div>
+
+        <!-- Shortcode Settings Tab -->
+        <div id="feedbackco-tab-shortcode" class="feedbackco-tab-content" style="display:none;">
+    <h2>Shortcode Settings</h2>
+    <form method="post" action="options.php">
+        <?php
+        settings_fields('feedbackco_shortcode_settings_group');
+        do_settings_sections('feedbackco_shortcode_settings_group');
+        ?>
+        <table class="form-table">
+            <tr valign="top">
+                <th scope="row">Shortcode Display Mode</th>
+                <td>
+                    <select name="feedbackco_shortcode_display_mode">
+                        <option value="inline" <?php selected(get_option('feedbackco_shortcode_display_mode'), 'inline'); ?>>Inline</option>
+                    </select>
+                    <p class="description">Shortcode will only display inline on your page.</p>
+                </td>
+            </tr>
+        </table>
+        <?php submit_button(); ?>
+    </form>
+
+    <h3>Generated Shortcode</h3>
+    <p>Copy the following shortcode to display the form:</p>
+    <textarea readonly id="feedbackco-shortcode" style="width: 100%;"><?php echo '[feedbackco_form]'; ?></textarea>
+    <button id="feedbackco-copy-shortcode" class="button">Copy Shortcode</button>
+</div>
+
+
+<script>
+    jQuery(document).ready(function($) {
+        $('#feedbackco-copy-shortcode').on('click', function() {
+            var shortcode = $('#feedbackco-shortcode');
+            shortcode.select();
+            document.execCommand('copy');
+            $(this).text('Copied!');
+            setTimeout(function() {
+                $('#feedbackco-copy-shortcode').text('Copy Shortcode');
+            }, 2000);
+        });
+    });
+</script>
+
     </div>
 </div>

@@ -157,4 +157,14 @@ class FeedbackCo_Public {
     
     
 }
+function feedbackco_register_shortcode() {
+    add_shortcode('feedbackco_form', 'feedbackco_shortcode_handler');
+}
+
+function feedbackco_shortcode_handler($atts) {
+    ob_start();
+    include plugin_dir_path(__FILE__) . 'partials/feedbackco-form-shortcode.php';
+    return ob_get_clean();
+}
+add_action('init', 'feedbackco_register_shortcode');
 

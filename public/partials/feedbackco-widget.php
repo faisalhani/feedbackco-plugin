@@ -9,9 +9,6 @@ $options = array(
 
 $categories = get_option('feedbackco_feedback_categories', array());
 
-
-$recaptcha_enabled = get_option('feedbackco_recaptcha_enabled', false);
-$recaptcha_site_key = get_option('feedbackco_recaptcha_site_key', '');
 ?>
 
 <style>
@@ -90,9 +87,9 @@ $recaptcha_site_key = get_option('feedbackco_recaptcha_site_key', '');
     </button>
 
     <div id="feedbackco-form-container">
-        <div id="feedbackco-form">
+    <div class="feedbackco-form-widget">
          
-            <form id="feedbackco-form-element">
+            <form id="feedbackco-form-element-widget">
                 <div class="feedbackco-field">
                     <label for="feedbackco-name">Name</label>
                     <input type="text" id="feedbackco-name" name="user_name" required>
@@ -131,13 +128,7 @@ $recaptcha_site_key = get_option('feedbackco_recaptcha_site_key', '');
         <input type="text" id="feedbackco-website" name="website" autocomplete="off">
     </div>
 
-    <?php if ($recaptcha_enabled && !empty($recaptcha_site_key)): ?>
-    <!-- reCAPTCHA v2 Checkbox -->
-    <div class="feedbackco-field">
-        <div class="g-recaptcha" data-sitekey="<?php echo esc_attr($recaptcha_site_key); ?>"></div>
-    </div>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<?php endif; ?>
+ 
                 <button type="submit" id="feedbackco-submit">Submit</button>
                 <button type="button" id="feedbackco-cancel">Cancel</button>
             </form>
